@@ -14,6 +14,7 @@ package org.activiti.engine;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 
@@ -203,6 +204,10 @@ public abstract class ProcessEngineConfiguration {
 
   protected boolean copyVariablesToLocalForTasks = false;
 
+  /**
+   * application identifiers
+   */
+  protected List<String> appIds;
   /** use one of the static createXxxx methods instead */
   protected ProcessEngineConfiguration() {
   }
@@ -761,4 +766,11 @@ public abstract class ProcessEngineConfiguration {
     return engineAgendaFactory;
   }
 
+  public List<String> getAppIds() {
+      return appIds;
+  }
+
+  public void setAppIds(List<String> appIds) {
+      this.appIds = appIds;
+  }
 }

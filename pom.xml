@@ -186,7 +186,7 @@
 
     <java.release>8</java.release>
     <java.version>1.${java.release}</java.version>
-    <maven.compiler.release>${java.release}</maven.compiler.release>
+<!--    <maven.compiler.release>${java.release}</maven.compiler.release>-->
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
@@ -438,6 +438,8 @@
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
           <optimize>true</optimize>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>

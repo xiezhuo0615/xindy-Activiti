@@ -1,9 +1,9 @@
 /* Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,7 +33,7 @@ import org.activiti.engine.runtime.Job;
 
  */
 public class MybatisTimerJobDataManager extends AbstractDataManager<TimerJobEntity> implements TimerJobDataManager {
-  
+
   protected CachedEntityMatcher<TimerJobEntity> timerJobsByExecutionIdMatcher = new TimerJobsByExecutionIdMatcher();
 
   public MybatisTimerJobDataManager(ProcessEngineConfigurationImpl processEngineConfiguration) {
@@ -65,10 +65,13 @@ public class MybatisTimerJobDataManager extends AbstractDataManager<TimerJobEnti
   @Override
   @SuppressWarnings("unchecked")
   public List<TimerJobEntity> findTimerJobsToExecute(Page page) {
+    Map<String, Object> params = new HashMap<>(2);
     Date now = getClock().getCurrentTime();
-    return getDbSqlSession().selectList("selectTimerJobsToExecute", now, page);
+    params.put("now",now);
+    params.put("appIds",processEngineConfiguration.getAppIds());
+    return getDbSqlSession().selectList("selectTimerJobsToExecute", params, page);
   }
-  
+
   @Override
   @SuppressWarnings("unchecked")
   public List<TimerJobEntity> findJobsByTypeAndProcessDefinitionId(String jobHandlerType, String processDefinitionId) {
@@ -83,7 +86,7 @@ public class MybatisTimerJobDataManager extends AbstractDataManager<TimerJobEnti
   public List<TimerJobEntity> findJobsByExecutionId(final String executionId) {
     return getList("selectTimerJobsByExecutionId", executionId, timerJobsByExecutionIdMatcher, true);
   }
-  
+
   @Override
   @SuppressWarnings("unchecked")
   public List<TimerJobEntity> findJobsByProcessInstanceId(final String processInstanceId) {
